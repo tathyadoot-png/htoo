@@ -1,76 +1,76 @@
-@import url("https://fonts.googleapis.com/css2?family=Gotu&family=Playpen+Sans+Deva:wght@100..800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Gotu&family=Poppins:wght@300;400;500;600;700;800&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* ===== POLITICAL COLOR SYSTEM ===== */
 @layer base {
   :root {
-    --color-primary: #E46B2E;      /* Kesariya */
-    --color-secondary: #112250;    /* Governance Blue */
-    --color-green: #159172;        /* Vikas Green */
-
-    --color-text: #1E3A8A;
-    --color-text-muted: #6B7280;
-
+    /* 🌈 RAINBOW VIBRANT PALETTE */
+    --color-rain-red: #EF4444;
+    --color-rain-orange: #F97316;
+    --color-rain-yellow: #FACC15;
+    --color-rain-green: #22C55E;
+    --color-rain-blue: #3B82F6;
+    --color-rain-purple: #A855F7;
+    
+    --color-text: #1E293B;
     --color-bg: #FFFFFF;
-    --color-bg-soft: #F9FAFB;
-    --color-border: #E5E7EB;
   }
 
-
-  /* 🔹 Default body content font */
   body {
-    @apply bg-bg text-text antialiased;
-    /* font-family: 'Poppins'; */
-    font-family: 'Poppins';
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    @apply antialiased;
+    font-family: 'Poppins', sans-serif;
+  }
+}
+
+@layer components {
+  /* 🌈 Rainbow Gradient Button */
+  .btn-rainbow {
+    @apply px-10 py-4 rounded-full font-black text-white transition-all duration-500
+           hover:scale-105 active:scale-95 shadow-xl flex items-center gap-2;
+    background: linear-gradient(90deg, #F97316, #FACC15, #22C55E, #3B82F6);
+    background-size: 200% auto;
+  }
+  
+  .btn-rainbow:hover {
+    background-position: right center;
+    box-shadow: 0 15px 30px -10px rgba(59, 130, 246, 0.5);
   }
 
-  /* 🔹 All headings = Gotu */
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    font-family: 'Gotu';
-    letter-spacing: 0.01em;
+  /* ☁️ Soft Glass for Content */
+  .glass-rainbow {
+    @apply bg-white/70 backdrop-blur-md border border-white/50 shadow-2xl;
+  }
+}
+
+@layer utilities {
+  .text-rainbow {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-orange-500 via-green-500 to-blue-600;
   }
 }
 
 
-@layer components {
-
-  /* 🔶 Kesariya CTA */
-  .btn-saffron {
-    @apply bg-primary text-white px-6 py-2 rounded-md
-           font-semibold tracking-wide
-           hover:brightness-110 active:scale-95
-           transition-all shadow-soft;
+@layer utilities {
+  /* 🌈 Innovative Rainbow Stroke */
+  .text-stroke-rainbow {
+    -webkit-text-stroke: 1.5px #A855F7; /* Purple stroke as base */
+    color: transparent;
   }
 
-  /* 🔷 Governance Blue */
-  .btn-blue {
-    @apply bg-secondary text-white px-6 py-2 rounded-md
-           font-semibold
-           hover:brightness-110 active:scale-95
-           transition-all shadow-soft;
+  /* Animated Rainbow Gradient for Bold Impact */
+  .animate-rainbow-text {
+    background: linear-gradient(to right, #EF4444, #F97316, #FACC15, #22C55E, #3B82F6, #A855F7);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: rainbow-shift 4s linear infinite;
   }
 
-  /* 🟢 Vikas Green */
-  .btn-green {
-    @apply bg-green text-white px-6 py-2 rounded-md
-           font-semibold
-           hover:brightness-110 active:scale-95
-           transition-all shadow-soft;
-  }
-
-  /* 🟢 Outline Green (Optional) */
-  .btn-green-outline {
-    @apply border border-green text-green bg-transparent
-           px-6 py-2 rounded-md font-semibold
-           hover:bg-green hover:text-white
-           transition-all;
+  @keyframes rainbow-shift {
+    to { background-position: 200% center; }
   }
 }

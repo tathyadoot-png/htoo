@@ -1,55 +1,32 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
-  darkMode: ["class"],
-  content: [
-    "./index.html",
-    "./src/**/*.{ts,tsx}",
-    "./pages/**/*.{ts,tsx}",
-    "./components/**/*.{ts,tsx}",
-    "./app/**/*.{ts,tsx}",
-  ],
+  content: ["./index.html", "./src/**/*.{ts,tsx}"],
   theme: {
-    container: {
-      center: true,
-      padding: "1rem",
-      screens: {
-        "2xl": "1280px",
-      },
-    },
     extend: {
-      
-    colors: {
-  primary: "var(--color-primary)",     // Kesariya
-  secondary: "var(--color-secondary)", // Blue
-  green: "var(--color-green)",         // Vikas Green
-
-  text: "var(--color-text)",
-  muted: "var(--color-text-muted)",
-
-  bg: "var(--color-bg)",
-  "bg-soft": "var(--color-bg-soft)",
-
-  border: "var(--color-border)",
-},
-
-      
-     fontFamily: {
-        amita: ['"Amita"', 'serif'],
-        asar: ['"Asar"', 'serif'],
-        gotu: ['"Gotu"', 'sans-serif'],
-        playpen: ['"Playpen Sans Deva"', 'sans-serif'],
+      colors: {
+        rainRed: "#EF4444",
+        rainOrange: "#F97316",
+        rainYellow: "#FACC15",
+        rainGreen: "#22C55E",
+        rainBlue: "#3B82F6",
+        rainPurple: "#A855F7",
       },
-      boxShadow: {
-        soft: "0 4px 20px rgba(0, 0, 0, 0.06)",
-        navbar: "0 2px 12px rgba(0, 0, 0, 0.08)",
+      backgroundImage: {
+        'rainbow-mesh': "linear-gradient(to right, #F97316, #FACC15, #22C55E, #3B82F6, #A855F7)",
       },
-      transitionTimingFunction: {
-        smooth: "cubic-bezier(0.4, 0, 0.2, 1)",
+      animation: {
+        'spin-slow': 'spin 15s linear infinite',
+        'float-slow': 'float 8s ease-in-out infinite',
       },
+      keyframes: {
+        float: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-20px)' },
+        }
+      }
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [],
 };
-
 export default config;

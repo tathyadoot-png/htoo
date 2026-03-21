@@ -1,16 +1,21 @@
+"use client";
 import { useState } from "react";
-import { useOutletContext } from "react-router-dom"; 
 import { motion } from "framer-motion";
-import type { Lang } from "@/layouts/MainLayout";
 import SectionHeading from "@/components/ui/SectionHeading/SectionHeading";
-import { Send, Mail, Facebook, Twitter, Instagram, Youtube, CheckCircle2 } from "lucide-react";
+import { MapPin, Mail, Phone, Send, MessageCircle } from "lucide-react";
+import type { Lang } from "@/layouts/MainLayout";
 
-const ContactSection = () => {
-  const { lang } = useOutletContext<{ lang: Lang }>(); 
+interface ContactSectionProps {
+  lang: Lang;
+}
+
+const ContactSection = ({ lang }: ContactSectionProps) => {
   const isHi = lang === "hi";
 
   const [form, setForm] = useState({
-    name: "", phone: "", email: "", city: "", message: "",
+    name: "",
+    phone: "",
+    message: "",
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -19,125 +24,152 @@ const ContactSection = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const subject = isHi ? "जनसंपर्क वेबसाइट से नया संदेश" : "New Message";
-    const body = `Name: ${form.name}\nPhone: ${form.phone}\nEmail: ${form.email}\nCity: ${form.city}\n\nMessage:\n${form.message}`;
-    window.location.href = `mailto:officeofrajendrashukla@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    const subject = "New Contact Message - HTO Foundation";
+    const body = `Name: ${form.name}\nPhone: ${form.phone}\nMessage: ${form.message}`;
+    window.location.href = `mailto:Social.h2ofoundation@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   };
 
-  const labels = {
-    title: isHi ? "अपनी बात हम तक पहुँचाएँ" : "Share Your Message With Us",
-    subtitle: isHi ? "संपर्क करें" : "Contact Us",
-    desc: isHi ? "विन्ध्य के विकास और आपकी समस्याओं के समाधान के लिए हम सदैव तत्पर हैं।" : "We are always ready for the development of Vindhya and to solve your problems.",
-    name: isHi ? "पूरा नाम" : "Full Name",
-    phone: isHi ? "मोबाइल नंबर" : "Mobile Number",
-    email: isHi ? "ईमेल पता" : "Email Address",
-    city: isHi ? "शहर / जिला" : "City / District",
-    msg: isHi ? "अपना संदेश लिखें...(वैकल्पिक)" : "Write your message...(optional)",
-    btn: isHi ? "संदेश भेजें" : "Send Message"
-  };
+  const contactInfo = [
+    {
+      icon: <MapPin className="text-rainBlue" />,
+      title: isHi ? "हमारा पता" : "Our Address",
+      detail: "H. I. G. B. TYPE no. 84 sector-a vidhaya nagar, bhopal, mp",
+      color: "bg-rainBlue/10",
+    },
+    {
+      icon: <Mail className="text-rainOrange" />,
+      title: "Email Us",
+      detail: "Social.h2ofoundation@gmail.com",
+      color: "bg-rainOrange/10",
+    },
+    {
+      icon: <MessageCircle className="text-rainGreen" />,
+      title: isHi ? "जुड़ें" : "Connect",
+      detail: isHi ? "समाज सेवा में योगदान दें" : "Contribute to social welfare",
+      color: "bg-rainGreen/10",
+    },
+  ];
 
   return (
-    <section id="contact" className="relative overflow-hidden bg-white py-16 lg:py-32">
-      {/* Background Blurs */}
-      <div className="absolute top-0 right-0 w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-primary/5 rounded-full blur-[80px] md:blur-[120px] -z-10" />
-      <div className="absolute bottom-0 left-0 w-[250px] md:w-[400px] h-[250px] md:h-[400px] bg-green/10 rounded-full blur-[70px] md:blur-[100px] -z-10" />
+    <>
+     <SectionHeading
+          subtitle={isHi ? "हमसे संपर्क करें" : "06. GET IN TOUCH"}
+          title={isHi ? "सहायता के लिए हाथ बढ़ाएं" : "Contact H2O Foundation"}
+        />
+    <section className="relative w-full pb-10 bg-slate-50 overflow-hidden">
+      
+      {/* Background Decorative Elements */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-rainBlue/5 rounded-full blur-[120px] -z-0" />
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-rainOrange/5 rounded-full blur-[120px] -z-0" />
 
-      <div className="mx-auto w-full">
-        {/* Heading Section */}
-        <div className="mb-10 lg:mb-20">
-          <SectionHeading subtitle={labels.subtitle} title={labels.title} />
-        </div>
+      <div className="container mx-auto px-6 relative z-10">
+       
 
-        <div className="mx-auto max-w-[95rem] px-6 lg:px-12">
-          {/* Main Grid: Using flex flex-col for mobile ordering */}
-          <div className="flex flex-col lg:grid lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-            
-            {/* RIGHT FORM - Now first on mobile using order-1 */}
-            <div className="w-full lg:col-span-7 order-1 lg:order-2 relative group">
-              <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 to-green/20 rounded-[2rem] md:rounded-[2.6rem] blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
-              
-              <div className="relative bg-bg-soft border border-border p-6 md:p-12 rounded-[2rem] md:rounded-[2.5rem] shadow-2xl shadow-secondary/5">
-                <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-                  <div className="space-y-2">
-                    <label className="text-[10px] md:text-xs font-bold text-secondary/40 uppercase ml-1 ">{labels.name}</label>
-                    <input type="text" name="name" required className="w-full rounded-xl border border-border bg-white px-4 py-3 md:px-5 md:py-4 focus:ring-2 focus:ring-green/20 focus:border-green transition-all outline-none" onChange={handleChange} />
-                  </div>
-                  <div className="space-y-2">
-                    <label className="text-[10px] md:text-xs font-bold text-secondary/40 uppercase ml-1 ">{labels.phone}</label>
-                    <input type="tel" name="phone" required className="w-full rounded-xl border border-border bg-white px-4 py-3 md:px-5 md:py-4 focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none" onChange={handleChange} />
-                  </div>
-                  <div className="space-y-2">
-                    <label className="text-[10px] md:text-xs font-bold text-secondary/40 uppercase ml-1 ">{labels.email}</label>
-                    <input type="email" name="email" required className="w-full rounded-xl border border-border bg-white px-4 py-3 md:px-5 md:py-4 focus:ring-2 focus:ring-green/20 focus:border-green transition-all outline-none" onChange={handleChange} />
-                  </div>
-                  <div className="space-y-2">
-                    <label className="text-[10px] md:text-xs font-bold text-secondary/40 uppercase ml-1">{labels.city}</label>
-                    <input type="text" name="city" required className="w-full rounded-xl border border-border bg-white px-4 py-3 md:px-5 md:py-4 focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none" onChange={handleChange} />
-                  </div>
-               
-                  <div className="md:col-span-2 space-y-2">
-                    <label className="text-[10px] md:text-xs font-bold text-secondary/40 uppercase ml-1 ">{labels.msg}</label>
-                    <textarea name="message" rows={4} className="w-full rounded-xl border border-border bg-white px-4 py-3 md:px-5 md:py-4 focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none resize-none" onChange={handleChange} />
-                  </div>
-                  <button type="submit" className="md:col-span-2 bg-secondary py-4 md:py-5 rounded-2xl text-white font-black text-sm md:text-base uppercase flex items-center justify-center gap-3 hover:bg-primary transition-all shadow-xl shadow-secondary/20">
-                    {labels.btn} <Send className="w-4 h-4 md:w-5 md:h-5" />
-                  </button>
-                </form>
-              </div>
+        <div className="mt-20 grid lg:grid-cols-12 gap-12 items-start">
+          
+          {/* 📍 LEFT SIDE: Info Cards */}
+          <div className="lg:col-span-5 space-y-8">
+            <div className="max-w-md">
+               <h3 className="text-3xl font-black text-slate-900 mb-4 tracking-tighter">
+                  {isHi ? "हम आपकी सुनने के लिए यहाँ हैं" : "We'd Love to Hear From You"}
+               </h3>
+               <p className="text-slate-500 font-medium">
+                  {isHi 
+                    ? "चाहे आप स्वयंसेवक बनना चाहते हों या मदद की ज़रूरत हो, हमसे बेझिझक संपर्क करें।" 
+                    : "Whether you want to volunteer or need support, feel free to reach out to us anytime."}
+               </p>
             </div>
 
-            {/* LEFT CONTENT - Now second on mobile using order-2 */}
-            <div className="w-full lg:col-span-5 order-2 lg:order-1 space-y-8 md:space-y-10">
-              <div className="space-y-4 md:space-y-6">
-                <h3 className="text-2xl md:text-4xl font-black text-secondary leading-tight text-justify">
-                  {isHi ? "आपकी आवाज़, हमारी प्राथमिकता" : "Your Voice, Our Priority"}
-                </h3>
-                <p className="text-secondary/60 text-base md:text-lg leading-relaxed text-justify">{labels.desc}</p>
-              </div>
-              
-              <div className="space-y-4">
-                 <div className="flex items-center gap-4 p-4 md:p-5 rounded-2xl bg-bg-soft border border-border group hover:border-green/30 transition-all">
-                    <div className="h-10 w-10 md:h-12 md:w-12 flex-shrink-0 flex items-center justify-center rounded-xl bg-white text-green shadow-sm">
-                      <Mail className="w-5 h-5 md:w-6 md:h-6" />
-                    </div>
-                    <span className="font-bold text-sm md:text-base text-secondary break-all">officeofrajendrashukla@gmail.com</span>
-                 </div>
-              </div>
-
-              {/* Trust Badge */}
-              <div className="flex items-center gap-3 py-2 px-4 bg-green/5 border border-green/10 rounded-full w-fit">
-                <CheckCircle2 className="w-4 h-4 md:w-5 md:h-5 text-green" />
-                <span className="text-[10px] md:text-xs font-bold text-green uppercase ">
-                 {isHi ? "हमसे जुड़ें" : "Connect With Us"}
-                </span>
-              </div>
-
-              {/* Social Icons */}
-             <div className="flex gap-4 pt-2 md:pt-4">
-  {[
-    { Icon: Facebook, link: "https://www.facebook.com/OfficeOfRShukla" },
-    { Icon: Twitter, link: "https://x.com/OfficeOfRShukla" },
-    { Icon: Instagram, link: "https://www.instagram.com/officeofrshukla/" },
-    // { Icon: Youtube, link: "https://www.youtube.com/" },
-  ].map(({ Icon, link }, i) => (
-    <a
-      key={i}
-      href={link}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="h-11 w-11 md:h-12 md:w-12 flex items-center justify-center rounded-full bg-secondary text-white hover:bg-primary transition-all shadow-md"
-    >
-      <Icon className="w-5 h-5" />
-    </a>
-  ))}
-</div>
-
+            <div className="grid gap-6">
+              {contactInfo.map((info, idx) => (
+                <motion.div 
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ delay: idx * 0.1 }}
+                  key={idx}
+                  className="flex items-start gap-5 p-6 rounded-3xl bg-white border border-slate-100 shadow-sm hover:shadow-md transition-shadow"
+                >
+                  <div className={`w-14 h-14 rounded-2xl ${info.color} flex items-center justify-center shrink-0`}>
+                    {info.icon}
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-black uppercase tracking-widest text-slate-400 mb-1">{info.title}</h4>
+                    <p className="text-slate-700 font-bold leading-relaxed">{info.detail}</p>
+                  </div>
+                </motion.div>
+              ))}
             </div>
-
           </div>
+
+          {/* ✉️ RIGHT SIDE: Modern Form */}
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            className="lg:col-span-7"
+          >
+            <form
+              onSubmit={handleSubmit}
+              className="bg-white p-8 md:p-12 rounded-[3rem] shadow-[0_50px_100px_rgba(0,0,0,0.04)] border border-slate-100 space-y-6"
+            >
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <label className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 ml-2">Full Name</label>
+                  <input
+                    type="text"
+                    name="name"
+                    placeholder={isHi ? "आपका नाम" : "John Doe"}
+                    value={form.name}
+                    onChange={handleChange}
+                    required
+                    className="w-full bg-slate-50 border-none rounded-2xl px-6 py-4 outline-none focus:ring-2 focus:ring-rainBlue/20 transition-all font-bold text-slate-700"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 ml-2">Phone Number</label>
+                  <input
+                    type="text"
+                    name="phone"
+                    placeholder={isHi ? "मोबाइल नंबर" : "+91 00000 00000"}
+                    value={form.phone}
+                    onChange={handleChange}
+                    required
+                    className="w-full bg-slate-50 border-none rounded-2xl px-6 py-4 outline-none focus:ring-2 focus:ring-rainBlue/20 transition-all font-bold text-slate-700"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 ml-2">Your Message</label>
+                <textarea
+                  name="message"
+                  placeholder={isHi ? "आपका संदेश यहाँ लिखें..." : "How can we help you?"}
+                  value={form.message}
+                  onChange={handleChange}
+                  rows={5}
+                  required
+                  className="w-full bg-slate-50 border-none rounded-3xl px-6 py-4 outline-none focus:ring-2 focus:ring-rainBlue/20 transition-all font-bold text-slate-700 resize-none"
+                />
+              </div>
+
+              <motion.button 
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                type="submit" 
+                className="group relative w-full bg-slate-900 text-white py-5 rounded-2xl font-black text-xs uppercase tracking-[0.3em] overflow-hidden shadow-2xl shadow-slate-200"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-rainBlue via-rainGreen to-rainOrange opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <span className="relative z-10 flex items-center justify-center gap-3">
+                  {isHi ? "संदेश भेजें" : "SEND MESSAGE"}
+                  <Send size={16} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                </span>
+              </motion.button>
+            </form>
+          </motion.div>
+
         </div>
       </div>
     </section>
+    </>
   );
 };
 

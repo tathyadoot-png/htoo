@@ -1,14 +1,9 @@
+"use client";
 import { motion } from "framer-motion";
-import { GraduationCap, ShieldCheck, User, Star, Quote } from "lucide-react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useLayoutEffect, useRef } from "react";
-import img18 from "@/assets/18.jpg";
 import SectionHeading from "@/components/ui/SectionHeading/SectionHeading";
+import bg_hands from "@/assets/about2.avif"; 
 
-gsap.registerPlugin(ScrollTrigger);
-
-type Lang = "hi" | "en";
+export type Lang = "hi" | "en";
 
 interface AboutSectionProps {
   lang: Lang;
@@ -16,190 +11,103 @@ interface AboutSectionProps {
 
 const AboutSection = ({ lang }: AboutSectionProps) => {
   const isHi = lang === "hi";
-  const sectionRef = useRef(null);
-
-  useLayoutEffect(() => {
-    const ctx = gsap.context(() => {
-      // 1. Giant Name Reveal (Slide up with skew)
-      gsap.from(".giant-name span", {
-        y: 100,
-        skewY: 7,
-        opacity: 0,
-        stagger: 0.2,
-        duration: 1.5,
-        ease: "power4.out",
-        scrollTrigger: {
-          trigger: ".giant-name",
-          start: "top 85%",
-        }
-      });
-
-      // 2. Bio Text Reveal (Fade in and slide)
-      gsap.from(".bio-content > div", {
-        x: -50,
-        opacity: 0,
-        stagger: 0.3,
-        duration: 1.2,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: ".bio-content",
-          start: "top 80%",
-        }
-      });
-
-      // 3. Image Scale & Reveal
-      gsap.from(".img-container", {
-        scale: 1.2,
-        clipPath: "inset(100% 0% 0% 0%)",
-        duration: 1.5,
-        ease: "expo.out",
-        scrollTrigger: {
-          trigger: ".img-container",
-          start: "top 80%",
-        }
-      });
-
-      // 4. Staggered Cards (Existing but optimized)
-      gsap.from(".info-card", {
-        y: 100,
-        rotate: 5,
-        opacity: 0,
-        stagger: 0.2,
-        duration: 1,
-        ease: "back.out(1.7)",
-        scrollTrigger: {
-          trigger: ".content-grid",
-          start: "top 85%",
-        }
-      });
-
-      // 5. Background Legacy Text Parallax
-      gsap.to(".legacy-watermark", {
-        x: -200,
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: 2,
-        }
-      });
-    }, sectionRef);
-    return () => ctx.revert();
-  }, []);
 
   return (
-    <section ref={sectionRef} className="relative w-full bg-[#FDFDFD] overflow-hidden">
-      
-      {/* 1. TOP SEAMLESS HEADING */}
-      <div className="w-full pt-20 pb-10 bg-gradient-to-b from-gray-50 to-white">
-        <SectionHeading
-          subtitle={isHi ? "जनसेवा को समर्पित एक जीवन" : "A Life Dedicated to Public Service"}
-          title={isHi ? "परिचय" : "About"}
-        />
-      </div>
+    <section className="relative w-full py-24 bg-white overflow-hidden">
+       <SectionHeading
+            subtitle={isHi ? "01. हमारी दृष्टि" : "01. OUR VISION"}
+            title={isHi ? "बदलाव की शुरुआत, आपसे और हमसे" : "Initiating Change, Together"}
+          />
+      {/* 🌈 Subtle Vector Noise & Glow */}
+      <div className="absolute top-0 left-0 w-full h-full opacity-[0.03] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
+      <div className="absolute top-[-10%] right-[-10%] w-[600px] h-[600px] bg-rainBlue/10 rounded-full blur-[140px]" />
 
-      <div className="max-w-[1800px] mx-auto px-6 lg:px-28 pb-24">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+      <div className="container mx-auto px-6 relative z-10">
+        
+        {/* 🏔️ Header Area */}
+ 
+
+        {/* 🍱 Bento Grid Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 auto-rows-[minmax(200px,auto)]">
           
-          {/* 2. LEFT COLUMN */}
-          <div className="lg:col-span-7 space-y-12">
+          {/* Main Statement Box (Large) */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            className="lg:col-span-7 bg-slate-900 rounded-[2.5rem] p-10 md:p-16 flex flex-col justify-end relative overflow-hidden group shadow-2xl"
+          >
+            <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-rainGreen/20 to-transparent blur-3xl" />
             
-            {/* Giant Name Branding */}
-            <div className="relative group giant-name overflow-hidden">
-              <h2 className="font-[Gotu] font-[1000] py-4  md:py-10 uppercase text-[#112250] text-6xl md:text-[8rem] lg:text-[9rem]">
-                <span className="text-[#E46B2E] block">{isHi ? "राजेन्द्र" : "RAJENDRA"}</span>
-                <span className="relative inline-block">
-                  {isHi ? "शुक्ल" : "SHUKLA"}
-                 
-                </span>
-              </h2>
+            <h3 className="text-3xl md:text-5xl font-light text-white leading-[1.2] relative z-10">
+              {isHi 
+                ? "“समाज के सर्वांगीण विकास के लिए समर्पित एक संस्था।”" 
+                : "“An organization dedicated to the holistic development of society.”"}
+            </h3>
+            <p className="mt-8 text-slate-400 text-lg font-light max-w-xl relative z-10">
+              {isHi 
+                ? "शिक्षा, स्वास्थ्य और आत्मनिर्भरता के माध्यम से हम हर वर्ग को सशक्त बनाने के लिए प्रतिबद्ध हैं।" 
+                : "Through education, health, and self-reliance, we are committed to empowering every section of society."}
+            </p>
+          </motion.div>
+
+          {/* Image Frame (Vertical) */}
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            className="lg:col-span-5 bg-slate-100 rounded-[2.5rem] overflow-hidden relative group"
+          >
+            <img 
+              src={bg_hands} 
+              alt="Community" 
+              className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 group-hover:scale-105"
+            />
+            {/* Inner Floating Tag */}
+            <div className="absolute top-6 right-6 px-5 py-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-white text-[10px] font-black uppercase tracking-widest">
+              Impact Since 2026
             </div>
+          </motion.div>
 
-            {/* Biography Content */}
-            <div className="space-y-8 max-w-2xl bio-content">
-              <div className="p-8 border-l-[6px] border-green bg-white shadow-[20px_20px_60px_rgba(0,0,0,0.05)] rounded-r-[2rem]">
-                <p className="font-[Gotu] text-2xl font-black text-[#112250]">
-                  {isHi 
-                    ? "जन्म: 03 अगस्त 1964 | बी.ई. (मैकेनिकल), रीवा इंजीनियरिंग कॉलेज" 
-                    : "Born: Aug 03, 1964 | B.E. (Mechanical), Rewa Engg. College"}
-                </p>
-              </div>
-
-              <div className="space-y-8 font-[Poppins] text-gray-600 font-bold leading-relaxed text-xl">
-                <div className="flex gap-4">
-                  <Quote className="text-[#E46B2E] shrink-0" size={32} />
-                  <p className="text-justify" >
-                    {isHi 
-                      ? "अपने छात्र जीवन के दौरान वर्ष 1985-86 में वे इंजीनियरिंग कॉलेज, रीवा के छात्रसंघ अध्यक्ष निर्वाचित हुए, जिससे उनके नेतृत्व कौशल की प्रारंभिक पहचान बनी।"
-                      : "During his student days in 1985-86, he was elected as the President of the Student Union at Rewa Engineering College, marking his early leadership."}
-                  </p>
-                </div>
-                <p className="pl-12 border-l-2 border-gray-100 italic text-justify">
-                  {isHi 
-                    ? "वर्ष 1998 में उन्होंने भारतीय जनता पार्टी की सदस्यता ग्रहण की तथा शीघ्र ही प्रदेश कार्यसमिति सदस्य बनाए गए।"
-                    : "In 1998, he joined the Bharatiya Janata Party and was soon appointed as a member of the State Executive Committee."}
-                </p>
-              </div>
+          {/* Stats/Action Box (Small) */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            className="lg:col-span-4 bg-rainOrange/[0.03] border border-rainOrange/10 rounded-[2.5rem] p-10 flex flex-col justify-between group hover:bg-rainOrange transition-all duration-500"
+          >
+            <div className="w-12 h-12 rounded-full border border-rainOrange/20 flex items-center justify-center group-hover:border-white transition-colors">
+               <div className="w-2 h-2 rounded-full bg-rainOrange group-hover:bg-white" />
             </div>
-          </div>
+            <div>
+              <h4 className="text-4xl font-black text-slate-900 group-hover:text-white transition-colors">100%</h4>
+              <p className="text-sm font-bold text-slate-500 group-hover:text-white/80 uppercase tracking-widest mt-2">Transparency</p>
+            </div>
+          </motion.div>
 
-          {/* 3. RIGHT COLUMN */}
-          <div className="lg:col-span-5 space-y-8 content-grid">
+          {/* Text Content Box (Medium) */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="lg:col-span-8 bg-slate-50 rounded-[2.5rem] p-10 md:p-14 flex flex-col md:flex-row gap-10 items-center border border-slate-100"
+          >
+            <p className="text-xl text-slate-600 font-light leading-relaxed">
+              {isHi 
+                ? "सामूहिक सहयोग और सकारात्मक सोच के माध्यम से ही एक बेहतर और विकसित समाज का निर्माण संभव है। हमारा लक्ष्य आत्मनिर्भरता है।" 
+                : "A better and developed society is possible only through collective cooperation and positive thinking. Our goal is self-reliance."}
+            </p>
             
-            {/* Immersive Image Container */}
-            <div className="relative h-[400px] rounded-[3rem] overflow-hidden shadow-2xl group img-container">
-              <img 
-                src={img18} 
-                className="bg-parallax absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" 
-                alt="Rajendra Shukla" 
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#112250] via-transparent to-transparent opacity-60" />
-              <div className="absolute bottom-8 left-8">
-                 <p className="text-white font-[Gotu] text-sm  uppercase opacity-80">Rewa, Madhya Pradesh</p>
-              </div>
-            </div>
+            <button className="whitespace-nowrap px-10 py-5 bg-white border border-slate-200 rounded-full text-slate-900 text-[10px] font-black uppercase tracking-[0.3em] hover:bg-rainBlue hover:text-white hover:border-rainBlue transition-all shadow-sm">
+               {isHi ? "हमसे जुड़ें" : "JOIN THE CAUSE"}
+            </button>
+          </motion.div>
 
-            {/* Interactive Grid Cards */}
-            <div className="grid grid-cols-2 gap-6">
-              <motion.div whileHover={{ y: -5 }} className="info-card col-span-2 p-10 rounded-[3rem] bg-[#112250] text-white relative overflow-hidden group">
-                <User className="text-[#E46B2E] mb-4" size={32} />
-                <p className="font-[Gotu] text-2xl font-black italic uppercase leading-tight relative z-10">
-                  {isHi ? "छात्रसंघ अध्यक्ष (1985)" : "Student Union President"}
-                </p>
-                <div className="absolute -right-4 -bottom-4 text-white/5 group-hover:scale-110 transition-transform">
-                   <User size={150} />
-                </div>
-              </motion.div>
-
-              <motion.div whileHover={{ scale: 1.02 }} className="info-card p-8 rounded-[2.5rem] bg-white border border-gray-100 shadow-sm flex flex-col justify-between aspect-square group">
-                <div className="h-14 w-14 bg-[#E46B2E]/10 text-primary rounded-2xl flex items-center justify-center group-hover:rotate-12 transition-transform">
-                  <GraduationCap size={28} />
-                </div>
-                <div>
-                  <p className="font-[Gotu] text-3xl font-black text-green">B.E.</p>
-                  <p className="font-[Poppins] text-[10px] font-black text-gray-400 uppercase  mt-2">{isHi ? "मैकेनिकल 1986" : "Mechanical '86"}</p>
-                </div>
-              </motion.div>
-
-              <motion.div whileHover={{ scale: 1.02 }} className="info-card p-8 rounded-[2.5rem] bg-white border border-gray-100 shadow-sm flex flex-col justify-between aspect-square group">
-                <div className="h-14 w-14 bg-[#E46B2E]/10 text-primary rounded-2xl flex items-center justify-center group-hover:rotate-12 transition-transform">
-                  <ShieldCheck size={28} />
-                </div>
-                <div>
-                  <p className="font-[Gotu] text-3xl font-black text-green">BJP</p>
-                  <p className="font-[Poppins] text-[10px] font-black text-gray-400 uppercase  mt-2">{isHi ? "सदस्यता 1998" : "Joined 1998"}</p>
-                </div>
-              </motion.div>
-            </div>
-          </div>
         </div>
       </div>
 
-      {/* Background Watermark Layer */}
-      <div className="absolute top-1/2 left-0 w-full h-[1px] bg-gray-100 -z-10" />
-      <h1 className="legacy-watermark absolute bottom-0 right-0 text-[22vw] font-black text-gray-400/5 leading-none select-none pointer-events-none uppercase">
-        Legacy
-      </h1>
+      {/* 🏔️ Aesthetic Side Text */}
+      <div className="absolute left-[-5%] bottom-20 rotate-90 opacity-[0.02] select-none pointer-events-none hidden xl:block">
+        <span className="text-[12vw] font-black tracking-tighter uppercase">Empowerment</span>
+      </div>
+
     </section>
   );
 };

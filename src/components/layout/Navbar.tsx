@@ -1,183 +1,127 @@
-import { useState, useEffect, useRef, useLayoutEffect } from "react";
-import { Globe, Menu, X, ArrowRight, Home, User, Map, Briefcase, Award, Star, Tv, BadgeCheck, PhoneCall } from "lucide-react";
+"use client";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import gsap from "gsap";
-import hi from "@/locales/hi";
-import en from "@/locales/en";
-import logo from "@/assets/13.jpg";
+import { gsap } from "gsap";
+import logo from "@/assets/logo.jpeg"; //
 
-type Lang = "hi" | "en";
+export type Lang = "hi" | "en";
 
 interface NavbarProps {
   lang: Lang;
-  setLang: (l: Lang) => void;
+  setLang: (lang: Lang) => void;
 }
 
 const Navbar = ({ lang, setLang }: NavbarProps) => {
-  const t = lang === "hi" ? hi : en;
-  const [isOpen, setIsOpen] = useState(false);
+  const isHi = lang === "hi";
+  const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const navRef = useRef(null);
 
-  const navItems = [
-    { label: t.nav.home, href: "#home", icon: <Home size={20} /> },
-    { label: t.nav.about, href: "#about", icon: <User size={20} /> },
-    { label: lang === "hi" ? "राजनीतिक यात्रा" : "Journey", href: "#journey", icon: <Map size={20} /> },
-    { label: lang === "hi" ? "प्रमुख कार्य" : "Contributions", href: "#contributions", icon: <Briefcase size={20} /> },
-    { label: t.nav.achievements, href: "#achievements", icon: <Award size={20} /> },
-    { label: lang === "hi" ? "नेतृत्व" : "Leadership", href: "#leadership", icon: <Star size={20} /> },
-    { label: t.nav.media, href: "#media", icon: <Tv size={20} /> },
-  ];
-
-  useLayoutEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.fromTo(".nav-reveal", 
-        { y: -15, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.6, stagger: 0.05, ease: "power4.out" }
-      );
-    }, navRef);
-    return () => ctx.revert();
-  }, []);
-
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
+    const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll);
+
+    gsap.fromTo(navRef.current, 
+      { y: -100, opacity: 0 }, 
+      { y: 0, opacity: 1, duration: 1, ease: "expo.out", delay: 0.2 }
+    );
+
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  return (
-    <nav ref={navRef} className="fixed top-0 z-[100] w-full px-4 md:px-8 py-4 sm:py-6">
-      <div 
-        className={`mx-auto max-w-7xl flex items-center justify-between px-4 sm:px-6 py-2.5 transition-all duration-500 rounded-2xl border ${
-          scrolled 
-            ? "bg-white shadow-2xl border-border" 
-            : "bg-white/90 backdrop-blur-xl border-white shadow-lg"
-        }`}
-      >
-        {/* LOGO SECTION - Same as Desktop, minimal on mobile */}
-        <div className="nav-reveal flex items-center gap-3 group cursor-pointer">
-          <div className="h-10 w-10 sm:h-12 sm:w-12 shrink-0 overflow-hidden rounded-xl border-b-[3px] border-green shadow-md">
-             <img src={logo} alt="Logo" className="h-full w-full object-cover" />
-          </div>
+  const navItems = [
+    { id: "home", label: isHi ? "होम" : "Home", color: "bg-red-500" },
+    { id: "about", label: isHi ? "परिचय" : "About", color: "bg-orange-500" },
+    { id: "services", label: isHi ? "कार्य" : "Services", color: "bg-yellow-500" },
+    { id: "impact", label: isHi ? "प्रभाव" : "Impact", color: "bg-green-500" },
+    { id: "join-us", label: isHi ? "जुड़ें" : "Join Us", color: "bg-blue-500" },
+    { id: "contact", label: isHi ? "संपर्क" : "Contact", color: "bg-purple-500" },
+  ];
 
-          <div className="flex flex-col">
-            <h1 className="font-gotu font-[1000] text-secondary text-[14px] sm:text-lg md:text-xl  uppercase leading-none">
-              {lang === "hi" ? "राजेन्द्र शुक्ल" : "Rajendra Shukla"}
-            </h1>
-            <div className="flex items-center gap-1.5 mt-0.5 sm:mt-1">
-               <span className=" xs:block text-[8px] md:text-[10px] font-medium text-primary uppercase">
-                  {lang === "hi" ? "उपमुख्यमंत्री, मध्य प्रदेश शासन" : "Deputy CM Of MP Govt."}
-               </span>
-              
-               <div className="h-[1px] w-4 bg-green/40 hidden sm:block" />
+  return (
+    <header 
+      ref={navRef}
+      className={`fixed top-0 left-0 w-full z-[100] transition-all duration-700 ${
+        scrolled ? "py-3" : "py-6"
+      }`}
+    >
+      <div className={`container mx-auto px-4 transition-all duration-700 ${
+        scrolled ? "max-w-6xl" : "max-w-full"
+      }`}>
+        <div className={`flex items-center justify-between px-8 py-3 rounded-2xl transition-all duration-700 ${
+          scrolled 
+            ? "bg-white/95 backdrop-blur-md shadow-[0_10px_40px_rgba(0,0,0,0.05)] border border-slate-100" 
+            : "bg-transparent"
+        }`}>
+          
+          {/* 🏢 LOGO AREA (Fixed with standard img tag) */}
+          <div className="flex items-center gap-4 group">
+            <div className="w-12 h-12 relative transition-transform duration-500 group-hover:scale-110">
+              <img 
+                src={logo} 
+                alt="HTO Logo" 
+                className="w-full h-full object-contain"
+              />
+            </div>
+            <div className="flex flex-col border-l border-slate-200 pl-4">
+              <span className="font-black text-slate-900 text-xl tracking-tighter leading-none uppercase">
+                H2O <span className="text-slate-400">Foundation</span>
+              </span>
+              <div className="flex gap-1.5 mt-1.5">
+                 <div className="w-1.5 h-1.5 rounded-full bg-red-500" />
+                 <div className="w-1.5 h-1.5 rounded-full bg-yellow-500" />
+                 <div className="w-1.5 h-1.5 rounded-full bg-green-500" />
+                 <div className="w-1.5 h-1.5 rounded-full bg-blue-500" />
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* DESKTOP NAV */}
-        <nav className="hidden xl:flex items-center gap-8">
-          {navItems.map((item) => (
-            <a key={item.href} href={item.href} className="nav-reveal group relative">
-              <h1 className="text-[11px] font-[1000] uppercase  text-secondary/80 group-hover:text-green transition-colors cursor-pointer">
-                {item.label}
-              </h1>
-              <span className="absolute -bottom-1 left-0 h-[2px] w-0 bg-green transition-all duration-300 group-hover:w-full" />
+          {/* 🧭 NAV ITEMS WITH COLOR ACCENTS */}
+          <nav className="hidden lg:flex items-center gap-2">
+            {navItems.map((item) => (
+              <a
+                key={item.id}
+                href={`#${item.id}`}
+                className="relative px-5 py-2 group flex flex-col items-center"
+              >
+                <span className={`text-sm font-bold tracking-widest transition-colors ${scrolled ? 'text-slate-600 group-hover:text-slate-900' : 'text-slate-700 group-hover:text-slate-900'}`}>
+                  {item.label}
+                </span>
+                <span className={`w-1.5 h-1.5 rounded-full ${item.color} opacity-0 group-hover:opacity-100 transition-all duration-300 scale-0 group-hover:scale-100 mt-1`} />
+              </a>
+            ))}
+          </nav>
+
+          {/* ⚡ ACTION ZONE */}
+          <div className="flex items-center gap-6">
+            <button
+              onClick={() => setLang(isHi ? "en" : "hi")}
+              className="hidden sm:block text-[10px] font-black tracking-[0.2em] text-slate-400 hover:text-slate-900 transition-colors uppercase"
+            >
+              {isHi ? "English" : "हिंदी"}
+            </button>
+
+            <a 
+              href="#join-us" 
+              className="relative group bg-slate-900 text-white px-8 py-3 rounded-xl font-bold text-[10px] uppercase tracking-[0.2em] overflow-hidden transition-all active:scale-95 shadow-lg shadow-slate-200"
+            >
+              <span className="relative z-10">{isHi ? "जुड़ें" : "Join Us"}</span>
+              <div className="absolute inset-0 bg-red-500 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
             </a>
-          ))}
-        </nav>
 
-        {/* DESKTOP ACTIONS - Hidden on Mobile */}
-        <div className="nav-reveal flex items-center gap-4">
-          <button
-            onClick={() => setLang(lang === "hi" ? "en" : "hi")}
-            className="hidden lg:flex items-center gap-2 px-4 py-2 rounded-xl bg-bg-soft border border-border text-secondary  text-[10px] uppercase hover:bg-white hover:border-green transition-all"
-          >
-            <Globe size={14} className="text-green" />
-            {lang === "hi" ? "EN" : "हिंदी"}
-          </button>
-
-          <a
-            href="#contact"
-            className="hidden sm:flex items-center gap-2 bg-primary px-6 py-3 rounded-xl text-[10px]  uppercase text-white shadow-lg hover:bg-secondary transition-all"
-          >
-            {t.cta.contact}
-            <ArrowRight size={14} />
-          </a>
-
-          {/* MOBILE MENU TOGGLE */}
-          <button 
-            className="xl:hidden p-2.5 text-secondary bg-bg-soft rounded-xl border border-border active:scale-90 transition-all shadow-sm" 
-            onClick={() => setIsOpen(true)}
-          >
-            <Menu size={22} />
-          </button>
+            {/* Mobile Menu Icon */}
+            <button
+              className="lg:hidden w-11 h-11 flex flex-col items-center justify-center gap-1.5 bg-slate-50 rounded-xl"
+              onClick={() => setOpen(!open)}
+            >
+              <div className={`w-5 h-0.5 bg-slate-900 transition-all ${open ? "rotate-45 translate-y-2" : ""}`} />
+              <div className={`w-5 h-0.5 bg-slate-900 transition-all ${open ? "opacity-0" : ""}`} />
+              <div className={`w-3 h-0.5 bg-slate-900 transition-all ml-auto ${open ? "-rotate-45 -translate-y-2 !w-5" : ""}`} />
+            </button>
+          </div>
         </div>
       </div>
-
-      {/* MOBILE MENU - All actions shifted here */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, x: "100%" }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: "100%" }}
-            transition={{ type: "spring", damping: 25, stiffness: 200 }}
-            className="fixed inset-0 z-[110] bg-white lg:hidden flex flex-col p-6"
-          >
-            {/* Drawer Header */}
-            <div className="flex justify-between items-center mb-8">
-               <div className="flex items-center gap-3">
-                  <img src={logo} className="h-10 w-10 object-cover rounded-lg border-b-2 border-green" />
-                  <h1 className="text-secondary font-black text-lg uppercase ">Rajendra Shukla</h1>
-               </div>
-               <button onClick={() => setIsOpen(false)} className="p-3 bg-secondary text-white rounded-full shadow-lg">
-                  <X size={24} />
-               </button>
-            </div>
-
-            {/* Navigation Items */}
-            <nav className="flex flex-col gap-3 overflow-y-auto mb-6 pr-2">
-              {navItems.map((item, idx) => (
-                <motion.a
-                  key={item.href}
-                  initial={{ x: 20, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  transition={{ delay: idx * 0.05 }}
-                  href={item.href}
-                  onClick={() => setIsOpen(false)}
-                  className="flex items-center gap-4 p-4 rounded-2xl bg-bg-soft border border-border group active:bg-green/5 transition-all"
-                >
-                  <div className="text-green">{item.icon}</div>
-                  <h1 className="text-lg font-bold text-secondary uppercase ">{item.label}</h1>
-                </motion.a>
-              ))}
-            </nav>
-
-            {/* ACTION SECTION (Language & Contact shifted here) */}
-            <div className="mt-auto flex flex-col gap-3 pt-6 border-t border-border">
-               {/* Language Switcher */}
-               <button 
-                onClick={() => { setLang(lang === "hi" ? "en" : "hi"); setIsOpen(false); }}
-                className="flex items-center justify-center gap-3 w-full py-4 rounded-2xl bg-bg-soft border border-border text-secondary font-black uppercase text-xs  active:bg-white transition-all"
-               >
-                 <Globe size={18} className="text-green" />
-                 {lang === "hi" ? "Switch to English" : "हिंदी में बदलें"}
-               </button>
-
-               {/* Mobile Contact Button */}
-               <a 
-                href="#contact"
-                onClick={() => setIsOpen(false)}
-                className="flex items-center justify-center gap-3 w-full py-5 rounded-2xl bg-primary text-white font-black uppercase text-xs  shadow-xl shadow-primary/20"
-               >
-                 <PhoneCall size={18} />
-                 {t.cta.contact}
-               </a>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </nav>
+    </header>
   );
 };
 

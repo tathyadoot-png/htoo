@@ -2,13 +2,12 @@ import { useOutletContext } from "react-router-dom";
 import type { Lang } from "@/layouts/MainLayout";
 import HeroSection from "./sections/home/HeroSection";
 import AboutSection from "./sections/about/AboutSection";
-import JourneySection from "./sections/journey/JourneySection";
-import ContributionsSection from "./sections/contributions/ContributionsSection";
-import AchievementsSection from "./sections/achievements/AchievementsSection";
-import LeadershipSection from "./sections/leadership/LeadershipSection";
+
 import GallerySection from "./sections/gallery/GallerySection";
 import ContactSection from "./sections/contact/ContactSection";
-import AudioVideoSection from "./sections/AudioVideo/AudioVideoSection";
+import ServicesSection from "./sections/services/ServicesSection";
+import ImpactSection from "./sections/impact/ImpactSection";
+import JoinUsSection from "./sections/joinus/JoinUsSection";
 // import HeroSection from "./sections/hero/HeroSection";
 
 const HomePage = () => {
@@ -22,27 +21,22 @@ const HomePage = () => {
 <section id="about">
   <AboutSection lang={lang} />
 </section>
-<section id="journey">
-  <JourneySection lang={lang} />
+<section id="services">
+  <ServicesSection lang={lang} />
 </section>
-<section id="contributions">
-  <ContributionsSection lang={lang} />
-</section>
-<section id="achievements">
-  <AchievementsSection lang={lang} />
-</section>
-<section id="leadership">
-  <LeadershipSection lang={lang} />
+{/* <section id="impact">
+  <ImpactSection lang={lang} />
+</section> */}
+<section id="join-us">
+  <JoinUsSection lang={lang} />
 </section>
 
 <section id="media">
   <GallerySection  />
 </section>
-<section id="media2">
-  <AudioVideoSection lang={lang} />
-</section>
+
 <section id="contact">
-  <ContactSection  />
+  <ContactSection  lang={lang} />
 </section>
     </>
   );
