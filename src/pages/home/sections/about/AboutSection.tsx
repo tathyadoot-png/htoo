@@ -13,101 +13,98 @@ const AboutSection = ({ lang }: AboutSectionProps) => {
   const isHi = lang === "hi";
 
   return (
-    <section className="relative w-full py-24 bg-white overflow-hidden">
-       <SectionHeading
-            subtitle={isHi ? "01. हमारी दृष्टि" : "01. OUR VISION"}
-            title={isHi ? "बदलाव की शुरुआत, आपसे और हमसे" : "Initiating Change, Together"}
-          />
-      {/* 🌈 Subtle Vector Noise & Glow */}
-      <div className="absolute top-0 left-0 w-full h-full opacity-[0.03] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
-      <div className="absolute top-[-10%] right-[-10%] w-[600px] h-[600px] bg-rainBlue/10 rounded-full blur-[140px]" />
+    <section className="relative w-full py-20 md:py-32 bg-white overflow-hidden">
+      
+      {/* 🧼 CLEAN BACKGROUND: Only Soft Glows, No Noise */}
+      <div className="absolute top-[-5%] right-[-5%] w-[400px] md:w-[700px] h-[400px] md:h-[700px] bg-rainBlue/[0.04] rounded-full blur-[100px] md:blur-[150px] pointer-events-none" />
+      <div className="absolute bottom-[0%] left-[-5%] w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-rainOrange/[0.03] rounded-full blur-[100px] md:blur-[140px] pointer-events-none" />
 
       <div className="container mx-auto px-6 relative z-10">
         
-        {/* 🏔️ Header Area */}
- 
+        <SectionHeading
+          subtitle={isHi ? "01. हमारी दृष्टि" : "01. OUR VISION"}
+          title={isHi ? "बदलाव की शुरुआत, आपसे और हमसे" : "Initiating Change, Together"}
+        />
 
-        {/* 🍱 Bento Grid Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 auto-rows-[minmax(200px,auto)]">
+        {/* 🍱 Clean Bento Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mt-16 md:mt-24">
           
-          {/* Main Statement Box (Large) */}
+          {/* Main Statement Box */}
           <motion.div 
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            className="lg:col-span-7 bg-slate-900 rounded-[2.5rem] p-10 md:p-16 flex flex-col justify-end relative overflow-hidden group shadow-2xl"
+            viewport={{ once: true }}
+            className="lg:col-span-7 bg-[#0F172A] rounded-[3rem] p-10 md:p-16 flex flex-col justify-end relative overflow-hidden shadow-2xl shadow-slate-200"
           >
-            <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-rainGreen/20 to-transparent blur-3xl" />
+            {/* Subtle Inner Glow */}
+            <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-bl from-rainBlue/10 to-transparent blur-[60px]" />
             
-            <h3 className="text-3xl md:text-5xl font-light text-white leading-[1.2] relative z-10">
+            <h3 className="text-3xl md:text-5xl font-normal text-white leading-[1.25] relative z-10 tracking-tight italic">
               {isHi 
                 ? "“समाज के सर्वांगीण विकास के लिए समर्पित एक संस्था।”" 
                 : "“An organization dedicated to the holistic development of society.”"}
             </h3>
-            <p className="mt-8 text-slate-400 text-lg font-light max-w-xl relative z-10">
+            <p className="mt-8 text-slate-400 text-lg md:text-xl font-light max-w-xl relative z-10">
               {isHi 
                 ? "शिक्षा, स्वास्थ्य और आत्मनिर्भरता के माध्यम से हम हर वर्ग को सशक्त बनाने के लिए प्रतिबद्ध हैं।" 
                 : "Through education, health, and self-reliance, we are committed to empowering every section of society."}
             </p>
           </motion.div>
 
-          {/* Image Frame (Vertical) */}
+          {/* Image Frame */}
           <motion.div 
-            initial={{ opacity: 0, scale: 0.95 }}
+            initial={{ opacity: 0, scale: 0.98 }}
             whileInView={{ opacity: 1, scale: 1 }}
-            className="lg:col-span-5 bg-slate-100 rounded-[2.5rem] overflow-hidden relative group"
+            viewport={{ once: true }}
+            className="lg:col-span-5 min-h-[350px] bg-slate-50 rounded-[3rem] overflow-hidden relative group border border-slate-100"
           >
             <img 
               src={bg_hands} 
-              alt="Community" 
+              alt="Community Support" 
               className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 group-hover:scale-105"
             />
-            {/* Inner Floating Tag */}
-            <div className="absolute top-6 right-6 px-5 py-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-white text-[10px] font-black uppercase tracking-widest">
+            <div className="absolute top-6 right-6 px-5 py-2 bg-black/40 backdrop-blur-md border border-white/10 rounded-full text-white text-[10px] font-black uppercase tracking-widest">
               Impact Since 2026
             </div>
           </motion.div>
 
-          {/* Stats/Action Box (Small) */}
+          {/* Stats Box */}
           <motion.div 
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            className="lg:col-span-4 bg-rainOrange/[0.03] border border-rainOrange/10 rounded-[2.5rem] p-10 flex flex-col justify-between group hover:bg-rainOrange transition-all duration-500"
+            viewport={{ once: true }}
+            className="lg:col-span-4 bg-white border border-slate-100 rounded-[3rem] p-12 flex flex-col justify-between hover:shadow-xl transition-all duration-500"
           >
-            <div className="w-12 h-12 rounded-full border border-rainOrange/20 flex items-center justify-center group-hover:border-white transition-colors">
-               <div className="w-2 h-2 rounded-full bg-rainOrange group-hover:bg-white" />
+            <div className="w-14 h-14 rounded-2xl bg-rainOrange/10 flex items-center justify-center">
+               <div className="w-3 h-3 rounded-full bg-rainOrange animate-pulse" />
             </div>
             <div>
-              <h4 className="text-4xl font-black text-slate-900 group-hover:text-white transition-colors">100%</h4>
-              <p className="text-sm font-bold text-slate-500 group-hover:text-white/80 uppercase tracking-widest mt-2">Transparency</p>
+              <h4 className="text-5xl md:text-6xl font-black text-slate-900 tracking-tighter">100%</h4>
+              <p className="text-xs font-bold text-slate-400 uppercase tracking-[0.2em] mt-3">Transparency</p>
             </div>
           </motion.div>
 
-          {/* Text Content Box (Medium) */}
+          {/* Action Box */}
           <motion.div 
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="lg:col-span-8 bg-slate-50 rounded-[2.5rem] p-10 md:p-14 flex flex-col md:flex-row gap-10 items-center border border-slate-100"
+            className="lg:col-span-8 bg-slate-50 rounded-[3rem] p-10 md:p-14 flex flex-col md:flex-row gap-10 items-center border border-slate-100"
           >
-            <p className="text-xl text-slate-600 font-light leading-relaxed">
+            <p className="text-xl md:text-2xl text-slate-600 font-light leading-relaxed flex-1">
               {isHi 
-                ? "सामूहिक सहयोग और सकारात्मक सोच के माध्यम से ही एक बेहतर और विकसित समाज का निर्माण संभव है। हमारा लक्ष्य आत्मनिर्भरता है।" 
-                : "A better and developed society is possible only through collective cooperation and positive thinking. Our goal is self-reliance."}
+                ? "सामूहिक सहयोग और सकारात्मक सोच के माध्यम से एक बेहतर समाज का निर्माण संभव है।" 
+                : "A better society is possible only through collective cooperation and positive thinking."}
             </p>
             
-            <button className="whitespace-nowrap px-10 py-5 bg-white border border-slate-200 rounded-full text-slate-900 text-[10px] font-black uppercase tracking-[0.3em] hover:bg-rainBlue hover:text-white hover:border-rainBlue transition-all shadow-sm">
+            <button className="w-full md:w-auto px-12 py-6 bg-slate-900 text-white rounded-full text-[10px] font-black uppercase tracking-[0.3em] hover:bg-rainBlue transition-all shadow-xl active:scale-95">
                {isHi ? "हमसे जुड़ें" : "JOIN THE CAUSE"}
             </button>
           </motion.div>
 
         </div>
       </div>
-
-      {/* 🏔️ Aesthetic Side Text */}
-      <div className="absolute left-[-5%] bottom-20 rotate-90 opacity-[0.02] select-none pointer-events-none hidden xl:block">
-        <span className="text-[12vw] font-black tracking-tighter uppercase">Empowerment</span>
-      </div>
-
     </section>
   );
 };

@@ -31,9 +31,9 @@ const HomePage = () => {
   <JoinUsSection lang={lang} />
 </section>
 
-<section id="media">
+{/* <section id="media">
   <GallerySection  />
-</section>
+</section> */}
 
 <section id="contact">
   <ContactSection  lang={lang} />

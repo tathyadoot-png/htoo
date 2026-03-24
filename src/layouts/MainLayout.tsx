@@ -10,23 +10,32 @@ import ScrollToTop from "@/components/layout/ScrollToTop";
 export type Lang = "hi" | "en";
 
 const MainLayout = () => {
-  // ✅ Language state intact and synced with LocalStorage
   const [lang, setLang] = useState<Lang>(() => {
     if (typeof window === "undefined") return "hi";
     return (localStorage.getItem("lang") as Lang) || "hi";
   });
 
   const [loading, setLoading] = useState(true);
+  const [progress, setProgress] = useState(0);
   const isHi = lang === "hi";
 
   useEffect(() => {
     localStorage.setItem("lang", lang);
   }, [lang]);
 
+  // 📈 Realistic Progress Counter
   useEffect(() => {
-    // Loader duration (2.8s for premium feel)
-    const timer = setTimeout(() => setLoading(false), 2800);
-    return () => clearTimeout(timer);
+    const interval = setInterval(() => {
+      setProgress((prev) => {
+        if (prev >= 100) {
+          clearInterval(interval);
+          setTimeout(() => setLoading(false), 500);
+          return 100;
+        }
+        return prev + Math.floor(Math.random() * 10) + 1;
+      });
+    }, 150);
+    return () => clearInterval(interval);
   }, []);
 
   return (
@@ -35,54 +44,68 @@ const MainLayout = () => {
         {loading && (
           <motion.div
             key="loader"
-            className="fixed inset-0 z-[9999] bg-white flex flex-col items-center justify-center overflow-hidden"
+            className="fixed inset-0 z-[9999] bg-[#0c0c0c] flex flex-col items-center justify-center overflow-hidden px-10"
             exit={{ 
-              clipPath: "inset(0 0 100% 0)", 
-              transition: { duration: 0.8, ease: [0.85, 0, 0.15, 1] } 
+              y: "-100%", 
+              transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] } 
             }}
           >
-            {/* 🌈 Ultra-Thin Rainbow Progress Bar (Top) */}
-            <motion.div 
-              initial={{ width: 0 }}
-              animate={{ width: "100%" }}
-              transition={{ duration: 2.5, ease: "easeInOut" }}
-              className="absolute top-0 left-0 h-[4px] bg-gradient-to-r from-rainBlue via-rainGreen to-rainOrange"
-            />
+            {/* 🌌 Background Grain / Texture Effect */}
+            <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
 
-            {/* 🌌 Central Typography (Modern & Clean) */}
-            <div className="relative overflow-hidden flex flex-col items-center">
-              <motion.div
-                initial={{ y: 100, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-                className="flex items-center gap-4"
-              >
-                <h1 className="text-[12vw] md:text-[8vw] font-extralight tracking-tighter text-slate-900 leading-none">
-                  H2O
-                </h1>
-                <div className="h-[8vw] w-[2px] bg-slate-100 hidden md:block" />
-                <div className="flex flex-col items-start">
-                   <span className="text-[3vw] md:text-[2vw] font-black text-transparent bg-clip-text bg-gradient-to-r from-rainBlue to-rainOrange uppercase leading-none">
-                     Foundation
-                   </span>
-                   <span className="text-[10px] font-bold text-slate-300 tracking-[0.4em] uppercase mt-2">
-                     {isHi ? "सेवा • सहयोग" : "Service • Support"}
-                   </span>
-                </div>
-              </motion.div>
+            <div className="w-full max-w-4xl flex flex-col items-start space-y-4">
+              
+              {/* 🔢 Progress Number (Large & Left Aligned) */}
+              <div className="overflow-hidden">
+                <motion.span 
+                  initial={{ y: "100%" }}
+                  animate={{ y: 0 }}
+                  className="block text-[15vw] md:text-[10vw] font-black text-white leading-[0.8] tabular-nums tracking-tighter"
+                >
+                  {Math.min(progress, 100)}%
+                </motion.span>
+              </div>
+
+              {/* 🏷️ Foundation Name & Slogan (Balanced Alignment) */}
+              <div className="flex flex-col md:flex-row md:items-end gap-4 w-full border-t border-white/10 pt-6">
+                <motion.h1 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="text-2xl md:text-3xl font-bold text-white uppercase tracking-widest"
+                >
+                  H2O <span className="font-light text-slate-400 text-lg">Foundation</span>
+                </motion.h1>
+                
+                <div className="hidden md:block h-6 w-[1px] bg-white/20 mb-1" />
+
+                <motion.p 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.2 }}
+                  className="text-[10px] md:text-xs font-medium text-rainOrange uppercase tracking-[0.4em]"
+                >
+                  {isHi ? "स्वच्छ जल • स्वस्थ कल" : "Pure Water • Pure Life"}
+                </motion.p>
+
+                {/* 📍 Right Aligned Info */}
+                <motion.span 
+                  className="md:ml-auto text-[9px] font-black text-slate-600 uppercase tracking-[0.5em]"
+                  initial={{ x: 20, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                >
+                  Bhopal / MP
+                </motion.span>
+              </div>
             </div>
 
-            {/* ✨ Bottom Reveal */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1 }}
-              className="absolute bottom-12 text-center"
-            >
-              <p className="text-[9px] font-black uppercase tracking-[0.5em] text-slate-400">
-                Bhopal • Madhya Pradesh
-              </p>
-            </motion.div>
+            {/* 💎 Bottom Ultra-Thin Loader Line */}
+            <div className="absolute bottom-0 left-0 w-full h-[2px] bg-white/5">
+              <motion.div 
+                className="h-full bg-gradient-to-r from-rainBlue via-rainGreen to-rainOrange"
+                initial={{ width: 0 }}
+                animate={{ width: `${progress}%` }}
+              />
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -91,13 +114,12 @@ const MainLayout = () => {
         <motion.div 
           initial={{ opacity: 0 }} 
           animate={{ opacity: 1 }} 
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.8 }}
         >
           <Navbar lang={lang} setLang={setLang} />
           <StickySocial /> 
           <ScrollToTop />
           <main className="min-h-screen bg-white">
-            {/* ✅ Passing lang & setLang down to child routes */}
             <Outlet context={{ lang, setLang }} />
           </main>
           <Footer lang={lang} />

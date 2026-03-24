@@ -56,8 +56,8 @@ const Hero = ({ lang }: { lang: "hi" | "en" }) => {
             <h1 className="text-5xl md:text-7xl font-extrabold text-slate-900 tracking-tight py-6">
               {isHi ? (
                 <>
-                  एक बेहतर <span className="text-rainbow">कल की</span> <br />
-                  शुरुआत आज से
+                  एक बेहतर <span className="text-rainbow">कल </span>की <br />
+                  शुरुआत <span className="text-rainbow">आज</span> से
                 </>
               ) : (
                 <>
