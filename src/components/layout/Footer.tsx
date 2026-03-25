@@ -121,7 +121,7 @@ const Footer = ({ lang }: { lang: Lang }) => {
               <img
                 src={logo || logo}
                 alt="The Sociyo"
-                className="h-11 w-auto grayscale group-hover:grayscale-0 transition-all"
+                className="h-11 w-auto "
               />
               <div className="w-8 h-8 rounded-full bg-slate-900 flex items-center justify-center group-hover:bg-gradient-to-br from-rainBlue via-rainGreen to-rainOrange transition-all">
                 <ArrowUpRight size={14} className="text-white" />
