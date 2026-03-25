@@ -16,27 +16,19 @@ const MainLayout = () => {
   });
 
   const [loading, setLoading] = useState(true);
-  const [progress, setProgress] = useState(0);
   const isHi = lang === "hi";
 
   useEffect(() => {
     localStorage.setItem("lang", lang);
   }, [lang]);
 
-  // 📈 Realistic Progress Counter
   useEffect(() => {
-    const interval = setInterval(() => {
-      setProgress((prev) => {
-        if (prev >= 100) {
-          clearInterval(interval);
-          setTimeout(() => setLoading(false), 500);
-          return 100;
-        }
-        return prev + Math.floor(Math.random() * 10) + 1;
-      });
-    }, 150);
-    return () => clearInterval(interval);
+    const timer = setTimeout(() => setLoading(false), 2800);
+    return () => clearTimeout(timer);
   }, []);
+
+  // डॉट्स के लिए कलर्स की एरे
+  const dotColors = ["bg-rainBlue", "bg-rainGreen", "bg-rainOrange", "bg-rainBlue"];
 
   return (
     <>
@@ -44,68 +36,77 @@ const MainLayout = () => {
         {loading && (
           <motion.div
             key="loader"
-            className="fixed inset-0 z-[9999] bg-[#0c0c0c] flex flex-col items-center justify-center overflow-hidden px-10"
+            className="fixed inset-0 z-[9999] bg-white flex flex-col items-center justify-center overflow-hidden"
             exit={{ 
-              y: "-100%", 
-              transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] } 
+              clipPath: "inset(0 0 100% 0)", 
+              transition: { duration: 0.8, ease: [0.85, 0, 0.15, 1] } 
             }}
           >
-            {/* 🌌 Background Grain / Texture Effect */}
-            <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
+            {/* 🌈 Ultra-Thin Rainbow Progress Bar (Top) */}
+            <motion.div 
+              initial={{ width: 0 }}
+              animate={{ width: "100%" }}
+              transition={{ duration: 2.5, ease: "easeInOut" }}
+              className="absolute top-0 left-0 h-[4px] bg-gradient-to-r from-rainBlue via-rainGreen to-rainOrange"
+            />
 
-            <div className="w-full max-w-4xl flex flex-col items-start space-y-4">
-              
-              {/* 🔢 Progress Number (Large & Left Aligned) */}
-              <div className="overflow-hidden">
-                <motion.span 
-                  initial={{ y: "100%" }}
-                  animate={{ y: 0 }}
-                  className="block text-[15vw] md:text-[10vw] font-black text-white leading-[0.8] tabular-nums tracking-tighter"
-                >
-                  {Math.min(progress, 100)}%
-                </motion.span>
-              </div>
+            {/* 🌌 Central Typography (Modern & Clean) */}
+            <div className="relative overflow-hidden flex flex-col items-center">
+              <motion.div
+                initial={{ y: 100, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+                className="flex items-center gap-4"
+              >
+                <h1 className="text-[12vw] md:text-[8vw] font-semibold tracking-tighter text-slate-900 leading-none">
+                 h2o
+                </h1>
+                <div className="h-[8vw] w-[2px] bg-slate-400 hidden md:block" />
+                <div className="flex flex-col items-start">
+                   <span className="text-[3vw] md:text-[2vw] text-slate-900 uppercase leading-none">
+                      <span className="font-semibold">Help To Others</span> <br />
+                      <span className="tracking-[0.18em]"> Foundation </span>
+                   </span>
+                   <span className="text-slate-900 text-[2.6vw] md:text-[1.1vw] uppercase mt-2 tracking-[0.29em]">
+                     {isHi ? "सेवा • सहयोग • समर्पण" : "Service • Support • Dedication"}
+                   </span>
+                </div>
+              </motion.div>
 
-              {/* 🏷️ Foundation Name & Slogan (Balanced Alignment) */}
-              <div className="flex flex-col md:flex-row md:items-end gap-4 w-full border-t border-white/10 pt-6">
-                <motion.h1 
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  className="text-2xl md:text-3xl font-bold text-white uppercase tracking-widest"
-                >
-                  H2O <span className="font-light text-slate-400 text-lg">Foundation</span>
-                </motion.h1>
-                
-                <div className="hidden md:block h-6 w-[1px] bg-white/20 mb-1" />
-
-                <motion.p 
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.2 }}
-                  className="text-[10px] md:text-xs font-medium text-rainOrange uppercase tracking-[0.4em]"
-                >
-                  {isHi ? "स्वच्छ जल • स्वस्थ कल" : "Pure Water • Pure Life"}
-                </motion.p>
-
-                {/* 📍 Right Aligned Info */}
-                <motion.span 
-                  className="md:ml-auto text-[9px] font-black text-slate-600 uppercase tracking-[0.5em]"
-                  initial={{ x: 20, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                >
-                  Bhopal / MP
-                </motion.span>
+              {/* ✨ 4 Colorful Animated Dots Added Here */}
+              <div className="flex gap-2 mt-12">
+                {dotColors.map((color, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, scale: 0.5 }}
+                    animate={{ 
+                      opacity: [0.4, 1, 0.4],
+                      scale: [1, 1.3, 1],
+                      y: [0, -8, 0]
+                    }}
+                    transition={{ 
+                      duration: 0.8, 
+                      repeat: Infinity, 
+                      delay: i * 0.15,
+                      ease: "easeInOut"
+                    }}
+                    className={`w-3 h-3 rounded-full ${color} shadow-sm`}
+                  />
+                ))}
               </div>
             </div>
 
-            {/* 💎 Bottom Ultra-Thin Loader Line */}
-            <div className="absolute bottom-0 left-0 w-full h-[2px] bg-white/5">
-              <motion.div 
-                className="h-full bg-gradient-to-r from-rainBlue via-rainGreen to-rainOrange"
-                initial={{ width: 0 }}
-                animate={{ width: `${progress}%` }}
-              />
-            </div>
+            {/* ✨ Bottom Reveal */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1 }}
+              className="absolute bottom-12 text-center"
+            >
+              <p className="text-[9px] font-black uppercase tracking-[0.5em] text-slate-400">
+                Bhopal • Madhya Pradesh
+              </p>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -114,7 +115,7 @@ const MainLayout = () => {
         <motion.div 
           initial={{ opacity: 0 }} 
           animate={{ opacity: 1 }} 
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.6 }}
         >
           <Navbar lang={lang} setLang={setLang} />
           <StickySocial /> 

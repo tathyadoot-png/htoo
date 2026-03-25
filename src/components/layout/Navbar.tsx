@@ -87,7 +87,7 @@ const Navbar = ({ lang, setLang }: NavbarProps) => {
                   href={`#${item.id}`}
                   className="relative px-5 py-2 group overflow-hidden"
                 >
-                  <span className="relative z-10 text-[11px] font-black uppercase tracking-widest text-slate-500 group-hover:text-slate-900 transition-colors">
+                  <span className="relative z-10 text-[12px] font-black uppercase tracking-widest text-slate-500 group-hover:text-slate-900 transition-colors">
                     {item.label}
                   </span>
                   <motion.span 
