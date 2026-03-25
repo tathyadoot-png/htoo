@@ -170,13 +170,7 @@ const Navbar = ({ lang, setLang }: NavbarProps) => {
               ))}
             </nav>
 
-            <div className="mt-auto pt-8 border-t border-slate-100">
-               <p className="text-[10px] font-black text-slate-300 uppercase tracking-[0.4em] mb-4">Foundation Hub</p>
-               <div className="flex gap-4">
-                  <div className="w-10 h-10 rounded-full bg-rainBlue/10 flex items-center justify-center text-rainBlue">FB</div>
-                  <div className="w-10 h-10 rounded-full bg-rainOrange/10 flex items-center justify-center text-rainOrange">IG</div>
-               </div>
-            </div>
+           
           </motion.div>
         )}
       </AnimatePresence>

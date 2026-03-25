@@ -61,14 +61,14 @@ const MainLayout = () => {
                 <h1 className="text-[12vw] md:text-[8vw] font-semibold tracking-tighter text-slate-900 leading-none">
                  h2o
                 </h1>
-                <div className="h-[8vw] w-[2px] bg-slate-400 hidden md:block" />
+                <div className="h-[8vw] w-[2px] bg-slate-400  md:block" />
                 <div className="flex flex-col items-start">
                    <span className="text-[3vw] md:text-[2vw] text-slate-900 uppercase leading-none">
                       <span className="font-semibold">Help To Others</span> <br />
                       <span className="tracking-[0.18em]"> Foundation </span>
                    </span>
-                   <span className="text-slate-900 text-[2.6vw] md:text-[1.1vw] uppercase mt-2 tracking-[0.29em]">
-                     {isHi ? "सेवा • सहयोग • समर्पण" : "Service • Support • Dedication"}
+                   <span className="text-slate-900 text-[1.67vw] md:text-[1.1vw] uppercase mt-2 tracking-[0.29em]">
+                     {isHi ? "सेवा • सहयोग • समर्पण" : "सेवा • सहयोग • समर्पण"}
                    </span>
                 </div>
               </motion.div>

@@ -1,7 +1,7 @@
 "use client";
 import type { Lang } from "@/layouts/MainLayout";
 import logo from "@/assets/SociyoLogo.png";
-import { ArrowUpRight, Heart, Globe, Instagram, Twitter, Facebook, Sparkles } from "lucide-react";
+import { ArrowUpRight, Heart, Globe, Instagram, Twitter, Facebook, Sparkles, Youtube } from "lucide-react";
 import { motion } from "framer-motion";
 
 const Footer = ({ lang }: { lang: Lang }) => {
@@ -16,8 +16,15 @@ const Footer = ({ lang }: { lang: Lang }) => {
     { label: isHi ? "संपर्क" : "Contact", path: "#contact" },
   ];
 
+  const socials = [
+  { name: "Instagram", icon: Instagram, href: "https://www.instagram.com/h2oconnects" },
+  { name: "Twitter", icon: Twitter, href: "https://x.com/h2oconnects" },
+  { name: "Facebook", icon: Facebook, href: "https://www.facebook.com/h2oconnects" },
+  { name: "Youtube", icon: Youtube, href: "https://www.youtube.com/@h2oconnects" },
+];
+
   return (
-    <footer className="relative bg-white pt-24 pb-12 overflow-hidden border-t border-slate-100">
+    <footer className="relative bg-white pt-7 pb-7 overflow-hidden border-t border-slate-100">
       
       {/* 🌸 Soft Pastel Glows (For the Colorful feel) */}
       <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-rainBlue/5 rounded-full blur-[120px] -z-0" />
@@ -37,7 +44,7 @@ const Footer = ({ lang }: { lang: Lang }) => {
             </div>
 
             <h2 className="text-3xl font-light text-slate-800 leading-tight mb-6">
-              {isHi ? "हेल्प टू अडर " : "Help To Other "} 
+              {isHi ? "Help To Others " : "Help To Others "} 
               <span className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-rainBlue via-rainGreen to-rainOrange">
                 Foundation
               </span>
@@ -49,18 +56,23 @@ const Footer = ({ lang }: { lang: Lang }) => {
                 : "Our mission is to bring service and support to every section of society."}
             </p>
 
-            <div className="flex gap-4 mt-10">
-               {[Instagram, Twitter, Facebook].map((Icon, i) => (
-                 <motion.a 
-                   key={i} 
-                   whileHover={{ y: -5, color: "#F97316" }}
-                   href="#" 
-                   className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 border border-slate-100 transition-colors"
-                 >
-                   <Icon size={18} />
-                 </motion.a>
-               ))}
-            </div>
+          <div className="flex gap-4 mt-10">
+  {socials.map((item, i) => {
+    const Icon = item.icon;
+    return (
+      <motion.a
+        key={i}
+        href={item.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        whileHover={{ y: -5, color: "#F97316" }}
+        className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 border border-slate-100 transition-colors hover:text-primary"
+      >
+        <Icon size={18} />
+      </motion.a>
+    );
+  })}
+</div>
           </div>
 
           {/* 🧭 Navigation with Colorful Underlines */}
@@ -72,7 +84,7 @@ const Footer = ({ lang }: { lang: Lang }) => {
                   href={link.path}
                   className="group flex flex-col gap-1"
                 >
-                  <span className="text-[11px] font-black text-slate-400 uppercase tracking-widest group-hover:text-slate-900 transition-colors">
+                  <span className="text-[13px] font-semibold text-slate-400 uppercase tracking-widest group-hover:text-slate-900 transition-colors">
                     {link.label}
                   </span>
                   <div className="w-0 h-[2px] bg-gradient-to-r from-rainBlue via-rainGreen to-rainOrange transition-all duration-300 group-hover:w-full" />
@@ -86,10 +98,10 @@ const Footer = ({ lang }: { lang: Lang }) => {
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          className="mt-20 p-2 pl-8 pr-2 rounded-full bg-slate-50 border border-slate-100 flex flex-col md:flex-row items-center justify-between gap-4"
+          className="mt-10 p-2 pl-8 pr-2 rounded-full bg-slate-50 border border-slate-100 flex flex-col md:flex-row items-center justify-between gap-4"
         >
           <div className="flex items-center gap-4 py-2 md:py-0">
-             <Heart size={16} className="text-rainOrange" fill="#F97316" />
+            
              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em]">
                © {new Date().getFullYear()} {isHi ? "सर्वाधिकार सुरक्षित" : "All Rights Reserved"}
              </p>
@@ -99,7 +111,7 @@ const Footer = ({ lang }: { lang: Lang }) => {
             href="https://thesociyo.com/"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full md:w-auto flex items-center justify-between gap-8 bg-white px-6 py-3 rounded-full shadow-sm hover:shadow-md border border-slate-100 transition-all group"
+            className="w-full md:w-auto flex items-center justify-between gap-8 bg-gray-600 px-6 py-3 rounded-full shadow-sm hover:shadow-md border border-slate-100 transition-all group"
           >
             <span className="text-[10px] font-black text-slate-300 uppercase tracking-widest">
               Digital Partner
@@ -109,7 +121,7 @@ const Footer = ({ lang }: { lang: Lang }) => {
               <img
                 src={logo || logo}
                 alt="The Sociyo"
-                className="h-5 w-auto grayscale group-hover:grayscale-0 transition-all"
+                className="h-11 w-auto grayscale group-hover:grayscale-0 transition-all"
               />
               <div className="w-8 h-8 rounded-full bg-slate-900 flex items-center justify-center group-hover:bg-gradient-to-br from-rainBlue via-rainGreen to-rainOrange transition-all">
                 <ArrowUpRight size={14} className="text-white" />
